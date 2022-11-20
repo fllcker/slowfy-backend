@@ -8,16 +8,19 @@ using Microsoft.EntityFrameworkCore;
 using slowfy_backend.Data;
 using slowfy_backend.Models;
 using BCrypt.Net;
+using slowfy_backend.Services;
 
 namespace slowfy_backend.Controllers
 {
     public class UsersController : Controller
     {
         private readonly slowfy_backendContext _context;
+        private IUsersService _usersService;
 
-        public UsersController(slowfy_backendContext context)
+        public UsersController(slowfy_backendContext context, IUsersService usersService)
         {
             _context = context;
+            _usersService = usersService;
         }
 
         // GET: Users
@@ -61,12 +64,10 @@ namespace slowfy_backend.Controllers
         {
             if (ModelState.IsValid)
             {
-                user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
-                _context.Add(user);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                var rUser = await _usersService.Create(user);
+                return Json(rUser);
             }
-            return View(user);
+            return BadRequest("bad request");
         }
 
         // GET: Users/Edit/5

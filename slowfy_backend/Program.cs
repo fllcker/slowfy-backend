@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using slowfy_backend.Data;
+using slowfy_backend.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 // builder.Services.AddDbContext<slowfy_backendContext>(options =>
 //     options.UseSqlServer(builder.Configuration.GetConnectionString("slowfy_backendContext") ?? throw new InvalidOperationException("Connection string 'slowfy_backendContext' not found.")));
@@ -10,6 +12,9 @@ builder.Services.AddDbContext<slowfy_backendContext>(options =>
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+// adding services
+builder.Services.AddTransient<IUsersService, UsersService>();
 
 var app = builder.Build();
 
