@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -8,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using slowfy_backend.Data;
 using slowfy_backend.Models;
 using BCrypt.Net;
+using Microsoft.AspNetCore.Authorization;
 using slowfy_backend.Services;
 
 namespace slowfy_backend.Controllers
@@ -32,6 +34,7 @@ namespace slowfy_backend.Controllers
         }
 
         // GET: Users/Details/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.User == null)
@@ -126,6 +129,13 @@ namespace slowfy_backend.Controllers
         private bool UserExists(int id)
         {
           return (_context.User?.Any(e => e.Id == id)).GetValueOrDefault();
+        }
+
+        [HttpGet]
+        [Authorize]
+        public ActionResult GetMeEmail()
+        {
+            return Json(User?.FindFirstValue(ClaimTypes.Email));
         }
     }
 }

@@ -1,4 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using slowfy_backend.Data;
 using slowfy_backend.Models;
 
@@ -7,18 +10,21 @@ namespace slowfy_backend.Services;
 public class UsersService : IUsersService
 {
     private readonly slowfy_backendContext _dbContext;
+    private readonly IConfiguration _configuration;
 
-    public UsersService(slowfy_backendContext context)
+    public UsersService(slowfy_backendContext context, IConfiguration configuration)
     {
         _dbContext = context;
+        _configuration = configuration;
     }
 
-    public async Task<User> Create(User user)
+    public async Task<string> Create(User user)
     {
         user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
         _dbContext.Add(user);
         await _dbContext.SaveChangesAsync();
-        return user;
+        var token = CreateToken(user);
+        return token;
     }
 
     public async Task<bool> EmailExists(string email)
@@ -34,5 +40,25 @@ public class UsersService : IUsersService
         var result = BCrypt.Net.BCrypt.Verify(passwordWithoutHash, candidate.Password);
         if (!result) throw new Exception("Wrong data!");
         return result;
+    }
+
+    public string CreateToken(User user)
+    {
+        List<Claim> claims = new List<Claim>
+        {
+            new Claim(ClaimTypes.Email, user.Email)
+        };
+        var key = new SymmetricSecurityKey(
+            System.Text.Encoding.UTF8.GetBytes(_configuration.GetSection("Config:Secret").Value));
+
+        var cred = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
+
+        var token = new JwtSecurityToken(
+            claims: claims,
+            expires: DateTime.Now.AddDays(7),
+            signingCredentials: cred);
+
+        var jwt = new JwtSecurityTokenHandler().WriteToken(token);
+        return jwt;
     }
 }
