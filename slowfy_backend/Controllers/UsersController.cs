@@ -64,6 +64,8 @@ namespace slowfy_backend.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (await _usersService.EmailExists(user.Email)) return BadRequest("Email already exists");
+                
                 var rUser = await _usersService.Create(user);
                 return Json(rUser);
             }
