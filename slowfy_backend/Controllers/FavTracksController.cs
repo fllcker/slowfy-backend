@@ -28,38 +28,9 @@ namespace slowfy_backend.Controllers
         // GET: FavTracks
         public async Task<IActionResult> Index()
         {
-              return _context.FavouriteTracks != null ? 
-                          View(await _context.FavouriteTracks.ToListAsync()) :
-                          Problem("Entity set 'slowfy_backendContext.FavouriteTracks'  is null.");
+            return Json(await _context.FavouriteTracks.ToListAsync());
         }
-
-        // GET: FavTracks/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null || _context.FavouriteTracks == null)
-            {
-                return NotFound();
-            }
-
-            var favouriteTracks = await _context.FavouriteTracks
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (favouriteTracks == null)
-            {
-                return NotFound();
-            }
-
-            return View(favouriteTracks);
-        }
-
-        // GET: FavTracks/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: FavTracks/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        
         [HttpPost]
         public async Task<IActionResult> Create([Bind("Id,AddingUser,TargetTrack")] FavTrackDto favouriteTracks)
         {
@@ -79,94 +50,6 @@ namespace slowfy_backend.Controllers
             }
             else return BadRequest("err");
             //return View(favouriteTracks);
-        }
-
-        // GET: FavTracks/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null || _context.FavouriteTracks == null)
-            {
-                return NotFound();
-            }
-
-            var favouriteTracks = await _context.FavouriteTracks.FindAsync(id);
-            if (favouriteTracks == null)
-            {
-                return NotFound();
-            }
-            return View(favouriteTracks);
-        }
-
-        // POST: FavTracks/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id")] FavouriteTracks favouriteTracks)
-        {
-            if (id != favouriteTracks.Id)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(favouriteTracks);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!FavouriteTracksExists(favouriteTracks.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(favouriteTracks);
-        }
-
-        // GET: FavTracks/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null || _context.FavouriteTracks == null)
-            {
-                return NotFound();
-            }
-
-            var favouriteTracks = await _context.FavouriteTracks
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (favouriteTracks == null)
-            {
-                return NotFound();
-            }
-
-            return View(favouriteTracks);
-        }
-
-        // POST: FavTracks/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            if (_context.FavouriteTracks == null)
-            {
-                return Problem("Entity set 'slowfy_backendContext.FavouriteTracks'  is null.");
-            }
-            var favouriteTracks = await _context.FavouriteTracks.FindAsync(id);
-            if (favouriteTracks != null)
-            {
-                _context.FavouriteTracks.Remove(favouriteTracks);
-            }
-            
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
         }
 
         private bool FavouriteTracksExists(int id)
