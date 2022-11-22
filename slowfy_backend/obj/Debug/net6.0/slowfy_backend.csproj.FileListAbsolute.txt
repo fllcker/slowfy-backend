@@ -270,13 +270,9 @@ C:\Users\jxwid\RiderProjects\slowfy_backend\slowfy_backend\obj\Debug\net6.0\slow
 C:\Users\jxwid\RiderProjects\slowfy_backend\slowfy_backend\obj\Debug\net6.0\slowfy_backend.AssemblyInfo.cs
 C:\Users\jxwid\RiderProjects\slowfy_backend\slowfy_backend\obj\Debug\net6.0\slowfy_backend.csproj.CoreCompileInputs.cache
 C:\Users\jxwid\RiderProjects\slowfy_backend\slowfy_backend\obj\Debug\net6.0\slowfy_backend.MvcApplicationPartsAssemblyInfo.cache
-C:\Users\jxwid\RiderProjects\slowfy_backend\slowfy_backend\obj\Debug\net6.0\slowfy_backend.RazorAssemblyInfo.cache
-C:\Users\jxwid\RiderProjects\slowfy_backend\slowfy_backend\obj\Debug\net6.0\slowfy_backend.RazorAssemblyInfo.cs
 C:\Users\jxwid\RiderProjects\slowfy_backend\slowfy_backend\obj\Debug\net6.0\staticwebassets.build.json
 C:\Users\jxwid\RiderProjects\slowfy_backend\slowfy_backend\obj\Debug\net6.0\staticwebassets.development.json
-C:\Users\jxwid\RiderProjects\slowfy_backend\slowfy_backend\obj\Debug\net6.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
 C:\Users\jxwid\RiderProjects\slowfy_backend\slowfy_backend\obj\Debug\net6.0\scopedcss\bundle\slowfy_backend.styles.css
-C:\Users\jxwid\RiderProjects\slowfy_backend\slowfy_backend\obj\Debug\net6.0\scopedcss\projectbundle\slowfy_backend.bundle.scp.css
 C:\Users\jxwid\RiderProjects\slowfy_backend\slowfy_backend\obj\Debug\net6.0\slowfy_backend.csproj.CopyComplete
 C:\Users\jxwid\RiderProjects\slowfy_backend\slowfy_backend\obj\Debug\net6.0\slowfy_backend.dll
 C:\Users\jxwid\RiderProjects\slowfy_backend\slowfy_backend\obj\Debug\net6.0\refint\slowfy_backend.dll

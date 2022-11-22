@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "AKD6ILJIqDs1Jl+Mu+C9ChCDjJn3+jZSoVR2neZb9ZQ=",
+  "Hash": "Nw909ywGlusUPfReqz4f7q4ZxrPvoJo2RhJzK6ee4M4=",
   "Source": "slowfy_backend",
   "BasePath": "_content/slowfy_backend",
   "Mode": "Default",
@@ -16,40 +16,6 @@
     }
   ],
   "Assets": [
-    {
-      "Identity": "C:\\Users\\jxwid\\RiderProjects\\slowfy_backend\\slowfy_backend\\obj\\Debug\\net6.0\\scopedcss\\bundle\\slowfy_backend.styles.css",
-      "SourceId": "slowfy_backend",
-      "SourceType": "Computed",
-      "ContentRoot": "C:\\Users\\jxwid\\RiderProjects\\slowfy_backend\\slowfy_backend\\obj\\Debug\\net6.0\\scopedcss\\bundle\\",
-      "BasePath": "_content/slowfy_backend",
-      "RelativePath": "slowfy_backend.styles.css",
-      "AssetKind": "All",
-      "AssetMode": "CurrentProject",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "ScopedCss",
-      "AssetTraitValue": "ApplicationBundle",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\jxwid\\RiderProjects\\slowfy_backend\\slowfy_backend\\obj\\Debug\\net6.0\\scopedcss\\bundle\\slowfy_backend.styles.css"
-    },
-    {
-      "Identity": "C:\\Users\\jxwid\\RiderProjects\\slowfy_backend\\slowfy_backend\\obj\\Debug\\net6.0\\scopedcss\\projectbundle\\slowfy_backend.bundle.scp.css",
-      "SourceId": "slowfy_backend",
-      "SourceType": "Computed",
-      "ContentRoot": "C:\\Users\\jxwid\\RiderProjects\\slowfy_backend\\slowfy_backend\\obj\\Debug\\net6.0\\scopedcss\\projectbundle\\",
-      "BasePath": "_content/slowfy_backend",
-      "RelativePath": "slowfy_backend.bundle.scp.css",
-      "AssetKind": "All",
-      "AssetMode": "Reference",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "ScopedCss",
-      "AssetTraitValue": "ProjectBundle",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\jxwid\\RiderProjects\\slowfy_backend\\slowfy_backend\\obj\\Debug\\net6.0\\scopedcss\\projectbundle\\slowfy_backend.bundle.scp.css"
-    },
     {
       "Identity": "C:\\Users\\jxwid\\RiderProjects\\slowfy_backend\\slowfy_backend\\wwwroot\\css\\site.css",
       "SourceId": "slowfy_backend",

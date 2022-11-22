@@ -33,13 +33,13 @@ public class UsersService : IUsersService
         return candidate != 0;
     }
 
-    public async Task<bool> VerifyCredential(string email, string passwordWithoutHash)
+    public async Task<User> VerifyCredential(string email, string passwordWithoutHash)
     {
         var candidate = await _dbContext.User.FirstOrDefaultAsync(p => p.Email == email);
         if (candidate == null) throw new Exception("User not found!");
         var result = BCrypt.Net.BCrypt.Verify(passwordWithoutHash, candidate.Password);
         if (!result) throw new Exception("Wrong data!");
-        return result;
+        return candidate;
     }
 
     public string CreateToken(User user)

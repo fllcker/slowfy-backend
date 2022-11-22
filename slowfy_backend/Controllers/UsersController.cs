@@ -27,7 +27,7 @@ namespace slowfy_backend.Controllers
         {
             return Json(await _context.User.ToListAsync());
         }
-        
+
         [HttpPost]
         public async Task<IActionResult> Create([Bind("Id,Email,Password,Name,AvatarSrc")] User user)
         {
@@ -39,6 +39,21 @@ namespace slowfy_backend.Controllers
                 return Json(rUser);
             }
             return BadRequest("bad request");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Login(string email, string password)
+        {
+            try
+            {
+                var user = await _usersService.VerifyCredential(email, password);
+                var token = _usersService.CreateToken(user);
+                return Json(token);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         private bool UserExists(int id)

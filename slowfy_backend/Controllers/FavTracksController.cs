@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -30,26 +32,49 @@ namespace slowfy_backend.Controllers
         {
             return Json(await _context.FavouriteTracks.ToListAsync());
         }
-        
-        [HttpPost]
-        public async Task<IActionResult> Create([Bind("Id,AddingUser,TargetTrack")] FavTrackDto favouriteTracks)
-        {
-            if (ModelState.IsValid)
-            {
-                var user = await _usersService.GetUserById(favouriteTracks.AddingUser);
-                var track = await _tracksService.GetTrackById(favouriteTracks.TargetTrack);
-                var favTrack = new FavouriteTracks()
-                {
-                    AddingUser = user,
-                    TargetTrack = track
-                };
 
-                _context.Add(favTrack);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            else return BadRequest("err");
-            //return View(favouriteTracks);
+        // serverUrl/FavTracks/AddToFavourite     [form-data]: trackId   [auth]: bearer
+        [Authorize]
+        public async Task<IActionResult> AddToFavourite(int trackId = -1)
+        {
+            var user = await _context.User.FirstOrDefaultAsync(p => p.Email == User.FindFirstValue(ClaimTypes.Email));
+            if (user == null) return BadRequest("Authorize error");
+            if (trackId == -1) return BadRequest("trackId is null");
+
+            var track = await _tracksService.GetTrackById(trackId);
+
+            var alreadyExists = _context.FavouriteTracks
+                .Where(p => p.AddingUser.Id == user.Id)
+                .Count(p => p.TargetTrack.Id == track.Id);
+
+            if (alreadyExists != 0) return BadRequest("Track already is favourite!");
+            
+            var newFavTrack = new FavouriteTracks()
+            {
+                AddingUser = user,
+                TargetTrack = track
+            };
+            _context.Add(newFavTrack);
+            await _context.SaveChangesAsync();
+            return Json(newFavTrack);
+        }
+
+        // serverUrl/FavTracks/RemoveFromFavourites     [form-data]: trackId   [auth]: bearer
+        [Authorize]
+        public async Task<IActionResult> RemoveFromFavourites(int trackId = -1)
+        {
+            var user = await _context.User.FirstOrDefaultAsync(p => p.Email == User.FindFirstValue(ClaimTypes.Email));
+            if (user == null) return BadRequest("Authorize error");
+            if (trackId == -1) return BadRequest("trackId is null");
+
+            var favTrack = await _context.FavouriteTracks
+                .Where(p => p.TargetTrack.Id == trackId)
+                .FirstOrDefaultAsync(p => p.AddingUser.Id == user.Id);
+
+            if (favTrack == null) return BadRequest("Track is not a favourite");
+
+            var result = _context.FavouriteTracks.Remove(favTrack);
+            return Ok();
         }
 
         private bool FavouriteTracksExists(int id)
