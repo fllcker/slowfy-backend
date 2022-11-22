@@ -15,5 +15,7 @@ namespace slowfy_backend.Data
         }
 
         public DbSet<slowfy_backend.Models.User> User { get; set; } = default!;
+        public DbSet<slowfy_backend.Models.Tracks> Tracks { get; set; } = default!;
+        public DbSet<slowfy_backend.Models.FavouriteTracks> FavouriteTracks { get; set; } = default!;
     }
 }

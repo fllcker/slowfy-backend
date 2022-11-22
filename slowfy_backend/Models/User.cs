@@ -13,4 +13,5 @@ public class User
     [MaxLength(32)]
     public string Name { get; set; } // Username
     public string AvatarSrc { get; set; } // Link to avatar image on server
+    
 }

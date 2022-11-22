@@ -61,4 +61,10 @@ public class UsersService : IUsersService
         var jwt = new JwtSecurityTokenHandler().WriteToken(token);
         return jwt;
     }
+
+    public async Task<User> GetUserById(int id)
+    {
+        var user = await _dbContext.User.FirstOrDefaultAsync(p => p.Id == id);
+        return user ?? throw new Exception("User not found");
+    }
 }

@@ -31,6 +31,7 @@ builder.Services.AddAuthentication(
 
 // adding services
 builder.Services.AddTransient<IUsersService, UsersService>();
+builder.Services.AddTransient<ITracksService, TracksService>();
 
 var app = builder.Build();
 
