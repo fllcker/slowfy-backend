@@ -6,6 +6,7 @@ public class Tracks
     public string Author { get; set; }
     public string Title { get; set; }
     public int Duration { get; set; }
+    public string Source { get; set; }
 
     
 }

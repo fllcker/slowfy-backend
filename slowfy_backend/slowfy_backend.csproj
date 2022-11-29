@@ -27,7 +27,6 @@
 
     <ItemGroup>
       <Folder Include="Migrations" />
-      <Folder Include="static\images" />
     </ItemGroup>
 
     <ItemGroup>
@@ -57,6 +56,9 @@
 
     <ItemGroup>
       <None Update="static\tracks\gg.mp3">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="static\images\1.png">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
     </ItemGroup>

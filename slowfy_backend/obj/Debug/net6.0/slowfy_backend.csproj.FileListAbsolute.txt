@@ -297,3 +297,4 @@ C:\Users\jxwid\RiderProjects\slowfy_backend\slowfy_backend\bin\Debug\net6.0\BCry
 C:\Users\jxwid\RiderProjects\slowfy_backend\slowfy_backend\bin\Debug\net6.0\SimpleSHA256.dll
 C:\Users\jxwid\RiderProjects\slowfy_backend\slowfy_backend\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 C:\Users\jxwid\RiderProjects\slowfy_backend\slowfy_backend\bin\Debug\net6.0\static\tracks\gg.mp3
+C:\Users\jxwid\RiderProjects\slowfy_backend\slowfy_backend\bin\Debug\net6.0\static\images\1.png

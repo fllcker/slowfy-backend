@@ -26,13 +26,13 @@ namespace slowfy_backend.Controllers
         }
         
         [HttpPost]
-        public async Task<IActionResult> Create([Bind("Id,Author,Title,Duration")] Tracks tracks)
+        public async Task<IActionResult> Create([Bind("Author,Title,Duration,Source")] Tracks tracks)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(tracks);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return Json(tracks);
             }
             else return BadRequest("error");
         }
@@ -60,6 +60,17 @@ namespace slowfy_backend.Controllers
             }
 
             return Json(dic.OrderByDescending(p => p.AudCount).Select(p => p.Track).Take(count).ToList());
+        }
+        
+        [HttpGet]
+        public async Task<IActionResult> GetRandomTracks(int count = 10)
+        {
+            Random rnd = new Random();
+            var s = _context.Tracks.Skip(rnd.Next(1,
+                (int)Math.Round((double)await _context.Tracks.CountAsync() / 1.5)));
+
+            var res = await s.Take(count).ToListAsync();
+            return count > res.Count() ? Json(await _context.Tracks.ToListAsync()) : Json(res);
         }
 
         [HttpGet]
