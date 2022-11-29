@@ -67,4 +67,11 @@ public class UsersService : IUsersService
         var user = await _dbContext.User.FirstOrDefaultAsync(p => p.Id == id);
         return user ?? throw new Exception("User not found");
     }
+
+    public async Task<string> GetProfilePicture(string email)
+    {
+        var user = await _dbContext.User.FirstOrDefaultAsync(p => p.Email == email);
+        if (user == null) throw new Exception("User not found");
+        return user.AvatarSrc;
+    }
 }

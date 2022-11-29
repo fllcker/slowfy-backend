@@ -56,16 +56,54 @@ namespace slowfy_backend.Controllers
             }
         }
 
-        private bool UserExists(int id)
-        {
-          return (_context.User?.Any(e => e.Id == id)).GetValueOrDefault();
-        }
-
         [HttpGet]
         [Authorize]
         public ActionResult GetMeEmail()
         {
             return Json(User?.FindFirstValue(ClaimTypes.Email));
+        }
+        
+        [HttpGet]
+        [Authorize]
+        public async Task<ActionResult> GetProfile()
+        {
+            var email = User?.FindFirstValue(ClaimTypes.Email);
+            return Json(await _context.User.FirstOrDefaultAsync(p => p.Email == email));
+        }
+        
+        [HttpGet]
+        [Authorize]
+        public async Task<ActionResult> GetMyName()
+        {
+            var email = User?.FindFirstValue(ClaimTypes.Email);
+            User? user = await _context.User.FirstOrDefaultAsync(p => p.Email == email);
+            return user != null ? Json(user.Name) : BadRequest();
+        }
+
+        [HttpGet]
+        [Authorize]
+        public ActionResult CheckToken() => Ok();
+
+
+        [HttpGet]
+        [Authorize]
+        public async Task<ActionResult> GetProfilePhoto()
+        {
+            var email = User?.FindFirstValue(ClaimTypes.Email);
+            User? user = await _context.User.FirstOrDefaultAsync(p => p.Email == email);
+            return user != null ? Json(user.AvatarSrc) : BadRequest();
+        }
+        
+        [HttpPost]
+        [Authorize]
+        public async Task<ActionResult> SetProfilePhoto(string src)
+        {
+            var email = User?.FindFirstValue(ClaimTypes.Email);
+            User? user = await _context.User.FirstOrDefaultAsync(p => p.Email == email);
+            if (user == null) return BadRequest();
+            user.AvatarSrc = src;
+            var result = await _context.SaveChangesAsync();
+            return Json(result);
         }
     }
 }

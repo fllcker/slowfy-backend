@@ -9,4 +9,5 @@ public interface IUsersService
     public Task<User> VerifyCredential(string email, string passwordWithoutHash);
     public Task<User> GetUserById(int id);
     public string CreateToken(User user);
+    public Task<string> GetProfilePicture(string email);
 }

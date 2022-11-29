@@ -27,6 +27,7 @@
 
     <ItemGroup>
       <Folder Include="Migrations" />
+      <Folder Include="static\images" />
     </ItemGroup>
 
     <ItemGroup>
@@ -52,6 +53,12 @@
       <_ContentIncludedByDefault Remove="Views\Users\Index.cshtml" />
       <_ContentIncludedByDefault Remove="Views\_ViewImports.cshtml" />
       <_ContentIncludedByDefault Remove="Views\_ViewStart.cshtml" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="static\tracks\gg.mp3">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
 </Project>
