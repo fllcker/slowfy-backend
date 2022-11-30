@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
+using System.Xml.Serialization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -61,7 +64,31 @@ namespace slowfy_backend.Controllers
 
             return Json(dic.OrderByDescending(p => p.AudCount).Select(p => p.Track).Take(count).ToList());
         }
-        
+
+        private List<SBP_dto> SortByPopular(List<Tracks>? initial, int max = 10)
+        {
+            var idsTracks = initial.Select(p => p.Id);
+            var auds = idsTracks.Select(p =>
+            {
+                var aud = _context.Auditions.Count(g => g.Track.Id == p);
+                return new SBP_dto()
+                {
+                    Auds = aud,
+                    Track = _context.Tracks.FirstOrDefault(b => b.Id == p) ?? null
+                };
+            });
+            auds = auds.OrderByDescending(p => p.Auds);
+            return auds.Take(max).ToList();
+        }
+
+        // tracks/search?q=NAME&count=10
+        public async Task<IActionResult> Search(string q = "", int count = 10)
+        {
+            var res = await _context.Tracks.Where(p => p.Title.Contains(q)).ToListAsync();
+            var sorted = SortByPopular(res, count);
+            return Json(sorted.Select(p => p.Track).ToList());
+        }
+
         [HttpGet]
         public async Task<IActionResult> GetRandomTracks(int count = 10)
         {
@@ -85,5 +112,10 @@ namespace slowfy_backend.Controllers
             var tracks = await _context.Tracks.FirstOrDefaultAsync(p => p.Id == id);
             return tracks != null ? Json(tracks) : BadRequest("none");
         }
+    }
+    
+    public sealed class Utf8StringWriter : StringWriter
+    {
+        public override Encoding Encoding => Encoding.UTF8;
     }
 }
