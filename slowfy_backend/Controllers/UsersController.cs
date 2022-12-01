@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using slowfy_backend.Data;
 using slowfy_backend.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using slowfy_backend.Services;
 
 namespace slowfy_backend.Controllers
@@ -29,7 +30,7 @@ namespace slowfy_backend.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([Bind("Id,Email,Password,Name,AvatarSrc")] User user)
+        public async Task<IActionResult> Create([Bind("Email,Password,Name")] User user)
         {
             if (ModelState.IsValid)
             {
@@ -38,7 +39,10 @@ namespace slowfy_backend.Controllers
                 var rUser = await _usersService.Create(user);
                 return Json(rUser);
             }
-            return BadRequest("bad request");
+            string messages = string.Join("; ", ModelState.Values
+                .SelectMany(x => x.Errors)
+                .Select(x => x.ErrorMessage));
+            return BadRequest(messages);
         }
 
         [HttpPost]

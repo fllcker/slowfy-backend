@@ -7,6 +7,5 @@ public class Tracks
     public string Title { get; set; }
     public int Duration { get; set; }
     public string Source { get; set; }
-
-    
+    public bool E { get; set; }
 }

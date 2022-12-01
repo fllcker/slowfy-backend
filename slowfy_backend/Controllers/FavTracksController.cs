@@ -77,6 +77,17 @@ namespace slowfy_backend.Controllers
             return Ok();
         }
 
+        [Authorize]
+        public async Task<IActionResult> GetMyFavorite()
+        {
+            var email = User?.FindFirstValue(ClaimTypes.Email);
+            var favs = await _context.FavouriteTracks
+                .Where(p => p.AddingUser.Email == email)
+                .Select(k => k.TargetTrack)
+                .ToListAsync();
+            return Json(favs);
+        }
+
         private bool FavouriteTracksExists(int id)
         {
           return (_context.FavouriteTracks?.Any(e => e.Id == id)).GetValueOrDefault();
